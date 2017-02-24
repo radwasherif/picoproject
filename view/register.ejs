@@ -1,0 +1,41 @@
+<!DOCTYPE>
+<html>
+
+<head>
+    <title>Sign in now </title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/signin.css">
+
+</head>
+<script>
+    alert(error); 
+</script>
+<body>
+    <%include top-navbar%>
+            
+        <div class="container">
+            <span style="color:red"><%= error %></span>
+            <form action="/register" enctype="multipart/form-data" class="form-signin" method="POST">
+                <h2 class="form-signin-heading">Register </h2>
+
+                <label for="inputEmail" class="sr-only">Name:</label>
+                <input type="username" id="inputEmail" name="name" class="form-control" placeholder="Name" required autofocus>
+
+
+                <label for="inputEmail" class="sr-only">Username <%= error %></label>
+                <input type="username" id="inputEmail" name="username" class="form-control" placeholder="Username" required autofocus>
+
+                <label for="inputPassword" class="sr-only">Password</label>
+                <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+
+                <!--<label for="inputEmail">Profile picture:</label>
+                <input type="file" id="inputEmail" name="img_url" class="form-control" placeholder="Profile picture URL" autofocus>
+                <br>-->
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            </form>
+
+        </div>
+        <!-- /container -->
+</body>
+
+</html>
