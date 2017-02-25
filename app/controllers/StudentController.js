@@ -21,7 +21,6 @@ let StudentController = {
                     name: studentInfo.name,
                     username: studentInfo.username,
                     password: studentInfo.password,
-                    img_url: img, 
                     has_portfolio: false 
                 });
 

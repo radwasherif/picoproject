@@ -31,7 +31,7 @@ router.post('/signin', studentController.studentSignIn);
 router.get('/register', function(req, res) {
     res.render('register', {error: ""}); 
 }); 
-router.post('/register', upload.single('img_url'), studentController.studentRegister); 
+router.post('/register', studentController.studentRegister); 
 
 //User homepage
 router.get('/home/:id', studentController.studentHome); 
