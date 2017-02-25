@@ -12,7 +12,7 @@ app.set('views', './view');
 app.engine('html', require('ejs').renderFile);
 
 
-app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.urlencoded({extended:true}));
 
 var router = require('./app/routes.js'); 
 

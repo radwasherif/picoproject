@@ -7,7 +7,6 @@ var projectSchema = mongoose.Schema({
     }, 
     link: String,
     screenshot: String, 
-    student_id: Number, 
-    portfolio_id: Number 
+    student_id: Number
     
 }); 
