@@ -10,7 +10,7 @@ var studentSchema = mongoose.Schema({
     password: {type: String, required: true}, 
     has_portfolio: Boolean,
     number_of_projects: Number, 
-    img_url: String
+    profile_photo: String
 }); 
 
 var Student = mongoose.model("student", studentSchema); 

@@ -7,6 +7,8 @@ var projectSchema = mongoose.Schema({
     }, 
     link: String,
     screenshot: String, 
-    student_id: Number
+    student_username: String 
     
-}); 
+});
+var Project = mongoose.model("project", projectSchema); 
+module.exports = Project; 

@@ -6,7 +6,7 @@ let StudentController = {
         var studentInfo = req.body;
         console.log(studentInfo);
         Student.find({ username: studentInfo.username }, function (err, student) {
-            
+
             if (err) {
                 console.log(err)
             } else if (student[0]) {
@@ -15,17 +15,21 @@ let StudentController = {
                 // console.log(student); 
             } else {
                 let newStudent = new Student({
+                    name: '',
                     username: studentInfo.username,
                     password: studentInfo.password,
-                    has_portfolio: false
+                    has_portfolio: false,
+                    number_of_projects: 0,
+                    profile_photo: ''
                 });
 
                 newStudent.save(function (err, student) {
                     if (err) {
                         console.log(err);
                     } else {
-                        var id = student.id;
-                        res.redirect('create-portfolio/' + id, {student}); 
+                        req.session.user = student;
+                        req.flash('message', 'You have successfully registered to Pico!');
+                        res.redirect('home');
                     }
                 });
             }
@@ -42,47 +46,74 @@ let StudentController = {
                 var id = student.id;
                 console.log(student);
                 console.log(id);
-                // res.redirect('home/' + id);
+                // var newStudent = { id: student.id, username: student.username, student: signIn.password, has_portfolio: student.has_portfolio };
+                // req.session.user = newStudent;
+                console.log("Login");
+                    req.session.user = student;
+                console.log(req.session.user);
+                req.flash('message', 'You have successfully signed in.');
+                res.redirect('/home');
             } else {
-                console.log("Incorrect username-password combination.");
+                req.flash('message', 'Incorrect username-password combination.');
+                res.redirect('/signin');
             }
         });
     },
 
-    studentHome: function (req, res) {
-        var id = req.params.id;
-        Student.findById(id, function (err, student) {
-            if (err) {
-                console.log(err);
-            } else {
-                if (student.has_portfolio)
-                    res.render('home', {student});
-                else 
-                res.render('create-portfolio', {student}); 
-            }
-        });
-    },
-    createPortfolio: function (req, res, next) {
-        console.log("create portfolio"); 
-        var id = req.params.id;
-        var form = req.body;
-        console.log(req.body); 
-        if (!form.link && !form.screenshot) {
-            console.log(form.link); 
-            console.log(form.screenshot); 
-        } else {
-            Student.findByIdAndUpdate(id, { name: form.name, has_portfolio: true, number_of_project: 1 }, function (err, student) {
+    renderHomepage: function (req, res) {
+        var studentInfo = req.session.user;
+        console.log(req.session.user);
+        if (req.session.user.has_portfolio) {
+            Project.find({ student_username: studentInfo.username }, function (err, projects) {
                 if (err) {
                     console.log(err);
                 } else {
-                    console.log("createPortfolio");
+                    res.render('home', { message: req.flash('message'), student: studentInfo, projects: projects });
+
+                }
+            });
+        } else {
+            res.render('create-portfolio', { message: req.flash('message'), student: req.session.user });
+        }
+    },
+    createPortfolio: function (req, res, next) {
+        console.log("create portfolio");
+        console.log(req.session.user);
+        var id = req.session.user._id;
+        var form = req.body;
+        // console.log(req.files); 
+        var img = "uploads/" + req.files[0].filename;
+        if (!form.link && !form.screenshot) {
+            req.flash('message', 'You must attach a link or a screenshot for your work');
+            res.redirect('/create-portfolio');
+        } else {
+            Student.findByIdAndUpdate(id, {
+                name: form.name,
+                has_portfolio: true,
+                number_of_project: 1,
+                profile_photo: img
+            }, { new: true }, function (err, student) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log("updated");
+                    console.log(student);
+                    req.session.user = student;
+                    req.flash('message', 'Your profile has been successfully created.');
                     next();
+                    // res.redirect('/home');
                 }
             }
             );
         }
     },
-
+    signOut: function (req, res) {
+        req.session.destroy(function() {
+            console.log("Signed out"); 
+        })
+        res.redirect('/'); 
+    }   
+    ,
     saveProfilePhoto: function (req, res, next) {
 
         if (req.file) {
