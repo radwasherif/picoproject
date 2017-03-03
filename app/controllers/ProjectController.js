@@ -5,16 +5,12 @@ let ProjectController = {
         var projectInfo = req.body;
         var img = '';
         console.log(req.files);
-        if (req.files.length > 0) {
-            console.log("YA5TAAAAYYYYY"); 
-            if (req.session.user.has_portfolio)
-                img = 'uploads/' + req.files[0].filename;
-            else
-                img = 'uploads/' + req.files[1].filename;
+        if (typeof req.files != undefined && req.files.length > 0) {
+            for (var i = 0; i < req.files.length; i++)
+                if (req.files[i].fieldname == 'screenshot')
+                    img = 'uploads/' + req.files[i].filename;
 
         }
-        console.log("THIS IS THE FRICKING USER");
-        console.log(req.session.user);
         let newProject = new Project({
             title: projectInfo.title,
             link: projectInfo.link,

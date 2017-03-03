@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>All Portfolios</title>
+    <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" type="" href="css/portfolios.css">
+</head>
+<style>
+    .centered-and-cropped {
+        object-fit: cover
+    }
+</style>
+
+<body>
+    <!--<h1>All portfolios</h1>-->
+    <!--<%= signedInUser %> -->
+    <% if(signedInUser) { %>
+        <% include top-navbar-home %>
+            <% } %>
+                <% if(!signedInUser) { %>
+                    <% include top-navbar %>
+
+                        <% } %>
+
+                            <h1 style="margin: 70px" class="page-header">All Portfolios</h1>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-4 col-md-offset-3">
+                                        <form action="/portfolios" class="search-form" method="POST">
+                                            <div class="form-group has-feedback">
+                                                <label for="search" class="sr-only">Search</label>
+                                                <input type="text" class="form-control" name="search" id="search" placeholder="Search portfolios by name">
+                                                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+
+                                    <% for(var i = 0; i < students.length; i++) { 
+                    if(!students[i].has_portfolio)
+                        continue; 
+                    %>
+                                        <div class="summary col-md-6">
+                                            <div style="margin-bottom: 60px" class="well media">
+                                                <div class="media-left">
+                                                    <a href="#">
+                    <img class="centered-and-cropped" width="200" height="200" src="<%= students[i].profile_photo %>">
+                </a>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h2>
+                                                        <%= students[i].name %>
+                                                    </h2>
+                                                    <p>
+                                                        <%= students[i].description%>
+                                                    </p>
+                                                    <label class="label label-primary">Projects</label>
+                                                    <% for(var j = 0; j < 2 && j < students[i].projects.length; j++) { %>
+                                                        <li>
+                                                            <%= students[i].projects[j].title %>
+                                                        </li>
+                                                        <% } %>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <% } %>
+                                </div>
+
+                                <!--The actual pagination -->
+                                <% if (pageCount > 1) { %>
+                                    <ul style="margin: auto" class="pagination">
+                                        <% if (currentPage > 1) { %>
+                                            <li><a href="?page=1">&laquo;</a></li>
+                                            <% } %>
+                                                <% var i = 1;
+                                                    if (currentPage > 5) {
+                                                        i = +currentPage - 4;
+                                                        } %>
+                                                    <% if (i !== 1) { %>
+                                                        <li class="disabled"><a href="#">...</a></li>
+                                                        <% } %>
+                                                            <% for (i; i<=pageCount; i++) { %>
+                                                                <% if (currentPage == i) { %>
+                                                                    <li class="active"><span><%= i %> <span class="sr-only">(current)</span></span>
+                                                                    </li>
+                                                                    <% } else { %>
+                                                                        <li>
+                                                                            <a href="?page=<%= i %>">
+                                                                                <%= i %>
+                                                                            </a>
+                                                                        </li>
+                                                                        <% } %>
+                                                                            <% if (i == (+currentPage + 4)) { %>
+                                                                                <li class="disabled"><a href="#">...</a></li>
+                                                                                <% break; } %>
+                                                                                    <% } %>
+                                                                                        <% if (currentPage != pageCount) { %>
+                                                                                            <li><a href="?page=<%= pageCount %>">&raquo;</a></li>
+                                                                                            <% } %>
+                                    </ul>
+                                    <% } %>
+                                    <hr>
+                                        <% include footer %>
+                            </div>
+</body>
+
+</html>

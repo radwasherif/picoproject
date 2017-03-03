@@ -3,6 +3,7 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var studentController = require('./controllers/StudentController');
 var projectController = require('./controllers/ProjectController');
+var portfoliosController = require('./controllers/PortfoliosController');
 var multer = require('multer');
 //file filter for multer
 
@@ -23,7 +24,7 @@ router.get('/', function (req, res) {
 
 //Signin route
 router.get('/signin', function (req, res) {
-    res.render('signin', {message: req.flash('message')});
+    res.render('signin', { message: req.flash('message') });
 });
 router.post('/signin', studentController.studentSignIn);
 
@@ -39,15 +40,20 @@ router.get('/home', studentController.renderHomepage);
 //Create portfolio 
 router.get('/create-portfolio', studentController.renderHomepage);
 //Updates portfolio info in student object 
-router.post('/create-portfolio',
-    upload.any(), studentController.createPortfolio);
+router.post('/create-portfolio', upload.any(), studentController.createPortfolio);
 
 //Create the first project of the user 
-router.post('/create-portfolio', projectController.createProject); 
+router.post('/create-portfolio', studentController.addProject);
 
 //Create project
-router.post('/home',upload.any(), projectController.createProject); 
+router.post('/home', upload.any(), studentController.addProject);
 
 // Sign out 
-router.get('/signout', studentController.signOut); 
+router.get('/signout', studentController.signOut);
+
+//View all portfolios
+router.get('/portfolios', portfoliosController.renderPortfoliosPage);
+
+//Search portfolios 
+router.post('/portfolios', portfoliosController.searchPortfolios); 
 module.exports = router; 
