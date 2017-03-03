@@ -6,7 +6,7 @@
         <%= student.name %>'s Homepage</title>
     <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="css/home.css">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 <style>
     body {
@@ -31,24 +31,28 @@
 
 <body>
     <script>
-        var message = $('.message');
-        if (message.length) {
-            setTimeout(function () {
-                message.fadeOut('slow');
-            }, 5000);
-        }
+        $(document).ready(function () {
+            $("#alert").fadeOut(5000);
+            $("#submit_message").fadeOut(5000); 
+        });
     </script>
     <% include top-navbar-home %>
+        <% if(message.length > 0) { %>
+        <div id="alert" class="alert alert-success">
+            <strong>Success!</strong>
+            <%= message %>
+        </div>
+       <% } %>
+
         <div class="container">
             <div style="margin-bottom: 60px" class="media">
                 <div class="media-left">
                     <a href="#">
-                    <img id="profile-photo" class="centered-and-cropped media-object" width="200" height="200" 
+                    <img id="profile-photo" class="centered-and-cropped" width="200" height="200" 
    src="<%= student.profile_photo %>">
                 </a>
                 </div>
                 <div class="media-body">
-                    <%= message %>
                         <h1 class="page-header">
                             <%= student.name %>
                                 <small>Portfolio</small>
@@ -82,8 +86,8 @@
                 <div class="col-xs-12 col-md-4">
                     <div class="form-container">
                         <h3 style="margin-bottom:40px;">Add New Project</h3>
-                        <h5 style="color: red">
-                            <% if(submit_message) %>
+                        <h5 id="submit_message" style="color: red">
+                            <% if(submit_message.length > 0) %>
                                 <%= submit_message %>
                         </h5>
                         <form class="form" method="POST" enctype="multipart/form-data" action="/home">

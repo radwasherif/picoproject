@@ -5,10 +5,22 @@
     <title>Pico!</title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 </head>
+<style>
+    body {
+        padding-top: 70px;
+    }
+</style>
 
 <body>
+    <script>
+        $(document).ready(function () {
+            $("#alert").fadeOut(5000);
+            $("#submit_message").fadeOut(5000);
+        });
+    </script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
         <nav class="navbar navbar-fixed-top">
@@ -27,61 +39,65 @@
 
             </div>
         </nav>
-        <div class="jumbotron text-center">
-            <p>
+        <% if(message.length > 0) { %>
+            <div id="alert" class="alert alert-success">
+                <strong>Success!</strong>
                 <%= message %>
-            </p>
-            <h1>Hello,
-                <%= student.username %>!</h1>
-            <h2 style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; color: steelblue">Welcome to Pico. </h2>
-        </div>
-        <% if(!student.has_portfolio) { %>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 col-md-offset-3">
-                        <h1><span class="label label-primary">Create your Pico Portfolio Now! </span></h1>
-                        <form action="/create-portfolio" enctype="multipart/form-data" method="POST">
-                            <div class="form-group input-group-lg">
-                                <label for="">Name </label>
-                                <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
-                            </div>
-                            <div class="form-group input-group-lg">
-                                <label for="">Profile photo:</label>
-                                <input type="file" id="profile_photo" name="profile_photo">
-                            </div>
-                            <div class="form-group input-group-lg">
-                                <label for="">Portfolio description:</label>
-                                <textarea class="form-control" maxlength="120" name="description"></textarea>
-                            </div>
-                            <hr>
-                            <h4> <span class="label label-default">Add your first work: </span></h4>
-                            <p class="help-block">You must add at least one work to create a portfolio. </p>
-                            <div class="form-group input-group-lg">
-                                <label for="">Title: </label>
-                                <input type="text" class="form-control" id="title" name="title" placeholder="Title" required>
-                                <p class="help-block"> Choose a title for your work. </p>
-                            </div>
-                            <div class="form-group input-group-lg">
-                                <label for="">Link: </label>
-                                <input type="url" class="form-control" id="link" name="link" placeholder="Link">
-                                <p class="help-block">Provide a link for your code repositories and other works.</p>
-                            </div>
-                            <div class="form-group input-group-lg">
-                                <label for="exampleInputFile">Screenshot:</label>
-                                <input type="file" id="screenshot" name="screenshot">
-                                <p class="help-block">Upload a screenshot of your work.</p>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary btn-lg">Create Portfolio</button>
-                        </form>
-                        <br>
-                        <br>
-                    </div>
-                </div>
             </div>
-
             <% } %>
-            
+                <div class="jumbotron text-center">
+                    <h1>Hello,
+                        <%= student.username %>!</h1>
+                    <h2 style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; color: steelblue">Welcome to Pico. </h2>
+                </div>
+                <% if(!student.has_portfolio) { %>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-3">
+                                <h1><span class="label label-primary">Create your Pico Portfolio Now! </span></h1>
+                                <form action="/create-portfolio" enctype="multipart/form-data" method="POST">
+                                    <div class="form-group input-group-lg">
+                                        <label for="">Name </label>
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
+                                    </div>
+                                    <div class="form-group input-group-lg">
+                                        <label for="">Profile photo:</label>
+                                        <input type="file" id="profile_photo" name="profile_photo">
+                                    </div>
+                                    <div class="form-group input-group-lg">
+                                        <label for="">Portfolio description:</label>
+                                        <p class="help-block"> Max. 140 characters. </p>
+                                        <textarea class="form-control" maxlength="140" name="description"></textarea>
+                                    </div>
+                                    <hr>
+                                    <h4> <span class="label label-default">Add your first work: </span></h4>
+                                    <p class="help-block">You must add at least one work to create a portfolio. </p>
+                                    <div class="form-group input-group-lg">
+                                        <label for="">Title: </label>
+                                        <input type="text" class="form-control" id="title" name="title" placeholder="Title" required>
+                                        <p class="help-block"> Choose a title for your work. </p>
+                                    </div>
+                                    <div class="form-group input-group-lg">
+                                        <label for="">Link: </label>
+                                        <input type="url" class="form-control" id="link" name="link" placeholder="Link">
+                                        <p class="help-block">Provide a link for your code repositories and other works.</p>
+                                    </div>
+                                    <div class="form-group input-group-lg">
+                                        <label for="exampleInputFile">Screenshot:</label>
+                                        <input type="file" id="screenshot" name="screenshot">
+                                        <p class="help-block">Upload a screenshot of your work.</p>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary btn-lg">Create Portfolio</button>
+                                </form>
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+
+                    <% } %>
+
 </body>
 
 </html>
