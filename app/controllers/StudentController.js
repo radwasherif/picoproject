@@ -97,7 +97,7 @@ let StudentController = {
         var id = req.session.user._id;
         var form = req.body;
         var screenshot = '';
-        var img = '';
+        var img = 'buddy.png';
         if (typeof req.files != undefined && req.files.length > 0) {
             for (var i = 0; i < req.files.length; i++)
                 if (req.files[i].fieldname === 'profile_photo')

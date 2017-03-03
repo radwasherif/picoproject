@@ -42,12 +42,12 @@ let PortfoliosController = {
         var singedIn = false;
         if (req.session.user)
             singedIn = true;
-        Student.find({ 'name': new RegExp(data, 'i') }, function (err, studentsDB) {
+        Student.find({ 'name': new RegExp(data, 'i')}, function (err, studentsDB) {
             if (err) {
                 console.log(err);
             } else {
                 var totalStudents = studentsDB.length,
-                    pageSize = 3,
+                    pageSize = 4,
                     pageCount = Math.floor(totalStudents / pageSize),
                     currentPage = 1,
                     studentsArrays = [], //all students split into groups of 10
