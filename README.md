@@ -27,7 +27,7 @@ The SE course mini-project.
  
  index --> The landing page.   
  home --> user's homepage.   
- portfolios --> all portfolios for the guest to view    
+ portfolios --> all portfolios for the guest/user to view    
  create-portfolios --> The form presented to user to create his/her portfolio.    
  register and signin (self-explanatory)    
  
