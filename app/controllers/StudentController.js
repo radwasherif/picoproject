@@ -111,6 +111,7 @@ let StudentController = {
             console.log(img);
             req.flash('message', 'You must attach a link or a screenshot for your work');
             res.redirect('/create-portfolio');
+            next(); 
         } else {
             Student.findByIdAndUpdate(id, {
                 name: form.name,
@@ -156,9 +157,11 @@ let StudentController = {
                     img = 'uploads/' + req.files[i].filename;
 
         }
-        if (projectInfo.link === '' && img === '') {
+        if (projectInfo.link.length == 0 && img.length == 0) {
+            console.log('YO')
             req.flash('submit_message', 'You must submit a link or screenshot of your project.');
             res.redirect('/home');
+            next(); 
         }
         Student.findById(req.session.user._id, function (err, student) {
             console.log("Student at add Project");

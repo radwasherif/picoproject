@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var studentController = require('./controllers/StudentController');
-var projectController = require('./controllers/ProjectController');
+// var projectController = require('./controllers/ProjectController');
 var portfoliosController = require('./controllers/PortfoliosController');
 var multer = require('multer');
 //file filter for multer
