@@ -82,7 +82,11 @@ let StudentController = {
                 projects: req.session.user.projects
             });
         } else {
-            res.render('create-portfolio', { message: req.flash('message'), student: req.session.user, projects: req.session.user.projects });
+            res.render('create-portfolio', {
+                message: req.flash('message'),
+                submit_message: req.flash('submit_message'),
+                student: req.session.user, projects: req.session.user.projects
+            });
         }
     },
     /**
@@ -109,9 +113,9 @@ let StudentController = {
         if (form.link === '' && screenshot === '') {
             console.log("Link: " + form.link);
             console.log(img);
-            req.flash('message', 'You must attach a link or a screenshot for your work');
+            req.flash('submit_message', 'You must attach a link or a screenshot for your work');
             res.redirect('/create-portfolio');
-            next(); 
+            next();
         } else {
             Student.findByIdAndUpdate(id, {
                 name: form.name,
@@ -161,7 +165,7 @@ let StudentController = {
             console.log('YO')
             req.flash('submit_message', 'You must submit a link or screenshot of your project.');
             res.redirect('/home');
-            next(); 
+            next();
         }
         Student.findById(req.session.user._id, function (err, student) {
             console.log("Student at add Project");

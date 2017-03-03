@@ -87,7 +87,8 @@
                                         <input type="file" id="screenshot" name="screenshot">
                                         <p class="help-block">Upload a screenshot of your work.</p>
                                     </div>
-
+                                     <span style="color: red"> <% if(submit_message) %>  <%= submit_message %> </span>
+                                     <br>
                                     <button type="submit" class="btn btn-primary btn-lg">Create Portfolio</button>
                                 </form>
                                 <br>

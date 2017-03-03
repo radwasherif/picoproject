@@ -47,7 +47,7 @@ let PortfoliosController = {
                 console.log(err);
             } else {
                 var totalStudents = studentsDB.length,
-                    pageSize = 4,
+                    pageSize = 10,
                     pageCount = Math.floor(totalStudents / pageSize),
                     currentPage = 1,
                     studentsArrays = [], //all students split into groups of 10
