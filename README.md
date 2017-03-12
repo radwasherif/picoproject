@@ -1,5 +1,7 @@
 # picoproject
 The SE course mini-project.
+ URL: 
+ http://52.26.37.127:8080/
 
 <h1>Documentation:  </h1>
 <b> server.js:</b> The server setup of the project.  
